@@ -20,5 +20,4 @@ import reflow.core.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', reflow.core.views.home),
-    path('new/', reflow.core.views.new),
 ]
