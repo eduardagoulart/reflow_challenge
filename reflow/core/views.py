@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from reflow.core.models import Candidate
 from reflow.core.forms import CandidateForm
@@ -11,13 +12,13 @@ def home(request):
         form = CandidateForm(request.POST)
         print(f'form valid: {form}')
         if form.is_valid():
+            print('-********' * 20)
             print('entra aqui')
             post = form.save(commit=False)
             post.author = request.user
             post.save()
-            return redirect('index', pk=post.pk)
+            return HttpResponseRedirect(request.path_info)
     else:
-        print('estou caindo num else')
         form = CandidateForm()
 
     context = {
