@@ -6,7 +6,7 @@ from reflow.core.forms import CandidateForm
 def home(request):
     cand = Candidate.objects.all()
 
-    '''if request.method == "POST":
+    if request.method == "POST":
         print(request.POST)
         form = CandidateForm(request.POST)
         print(f'form valid: {form}')
@@ -18,11 +18,11 @@ def home(request):
             return redirect('index', pk=post.pk)
     else:
         print('estou caindo num else')
-        form = CandidateForm()'''
+        form = CandidateForm()
 
     context = {
         'candidate': cand,
-        # 'new_candidate': form,
+        'new_candidate': form,
     }
     return render(request, 'index.html', context)
 
