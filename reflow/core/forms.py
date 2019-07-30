@@ -16,3 +16,7 @@ class CandidateForm(forms.ModelForm):
             'experiencia': forms.TextInput(attrs={"class": "form-control"}),
             'resume': forms.FileInput(attrs={"class": "form-control"}),
         }
+
+
+class DeleteForm(forms.Form):
+    email = forms.EmailField()

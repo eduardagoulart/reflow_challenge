@@ -68,7 +68,7 @@
                 <td>{{ i.skills }}</td>
                 <td>{{ i.phone_number }}</td>
                 <td>
-                    <a href="#" class="view" title="View" data-toggle="tooltip"><i
+                    <a href="#viewEmployee" class="view" title="View" data-toggle="tooltip"><i
                             class="material-icons">&#xE417;</i></a>
 
                     <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons"
@@ -143,16 +143,16 @@
                 </div>
 
                 {{ new_candidate.errors }}
-        </div>
 
-        <div class="modal-footer">
-            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-            <button type="submit" class="save btn btn-default">Save</button>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <button type="submit" class="save btn btn-default">Save</button>
+                </div>
+            </form>
         </div>
-        </form>
     </div>
 </div>
-</div>
+
 <!-- Edit Modal HTML -->
 <div id="editEmployeeModal" class="modal fade">
     <div class="modal-dialog">
@@ -201,13 +201,16 @@
 <div id="deleteEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="modal-header">
                     <h4 class="modal-title">Delete Employee</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to delete these Records?</p>
+                    {{ delete.email }}
+
                     <p class="text-warning"><small>This action cannot be undone.</small></p>
                 </div>
                 <div class="modal-footer">
