@@ -17,7 +17,7 @@ def home(request):
 def form(request):
     if request.method == "POST":
         print(request.POST)
-        form = CandidateForm(request.POST)
+        form = CandidateForm(request.POST or None, request.FILES)
         print(f'form valid: {form}')
         if form.is_valid():
             print('-********' * 20)

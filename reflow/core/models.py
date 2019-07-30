@@ -9,7 +9,7 @@ class Candidate(models.Model):
     github = models.URLField()
     portifolio = models.URLField(blank=True)
     experiencia = models.TextField(blank=True)
-    resume = models.FileField(blank=True)
+    resume = models.FileField()
 
     def __str__(self):
         return self.name

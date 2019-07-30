@@ -100,21 +100,58 @@
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h4 class="modal-title">Add Employee</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                {{ new_candidate }}
-                {{ new_candidate.errors }}
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <button type="submit" class="save btn btn-default">Save</button>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        {{ new_candidate.name }}
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        {{ new_candidate.email }}
+                    </div>
+                    <div class="form-group">
+                        <label>Skills</label>
+                        {{ new_candidate.skills }}
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        {{ new_candidate.phone_number }}
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        {{ new_candidate.github }}
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        {{ new_candidate.portifolio }}
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        {{ new_candidate.experiencia }}
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        {{ new_candidate.resume }}
+                    </div>
                 </div>
-            </form>
+
+                {{ new_candidate.errors }}
         </div>
+
+        <div class="modal-footer">
+            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+            <button type="submit" class="save btn btn-default">Save</button>
+        </div>
+        </form>
     </div>
+</div>
 </div>
 <!-- Edit Modal HTML -->
 <div id="editEmployeeModal" class="modal fade">
