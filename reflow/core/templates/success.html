@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-    <title>Crie sua conta</title>
+    <title>Sucesso</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -18,30 +18,12 @@
 <div class="signup-form">
     <form method="post">
         {% csrf_token %}
-        <h2>Registrar</h2>
-        <p class="hint-text">Crie uma conta, é gratuito e leva apenas alguns minutos.</p>
-        {% for field in form %}
+        <h2>Sucesso!!</h2>
+        <p class="hint-text">Seu currículo foi enviado com sucesso. Tentamos entrar em contato com todos os nossos
+            candidatos, porém caso não receba nosso email em até três semanas, não desista, seu currículo continuará
+            salvo no nosso banco</p>
 
-        <div class="form-group">
-            {{ field.label_tag }}<br>
-            {{ field }}
-        </div>
-
-        {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-        {% endfor %}
-        </p>
-        {% endfor %}
-
-        <div class="form-group">
-            <label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of
-                Use</a> &amp; <a href="#">Privacy Policy</a></label>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
-        </div>
     </form>
-    <div class="text-center">Já possui uma conta? <a href="{% url 'login' %}">Sign up</a></div>
 </div>
 </body>
 {% endblock %}

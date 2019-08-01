@@ -79,8 +79,16 @@ body{
 		text-decoration: none;
 	}
 	.signup-form form a{
-		color: #5cb85c;
+		color: red;
 		text-decoration: none;
+	}
+
+	.signup-form.delete form a{
+	    color: red;
+	}
+
+	#delete{
+	     color: red;
 	}
 	.signup-form form a:hover{
 		text-decoration: underline;

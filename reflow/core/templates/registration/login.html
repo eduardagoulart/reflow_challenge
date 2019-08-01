@@ -16,10 +16,10 @@
 </head>
 <body>
 <div class="signup-form">
-    <form method="post">
+    <form method="post" action="{% url 'user_details' %}">
         {% csrf_token %}
-        <h2>Registrar</h2>
-        <p class="hint-text">Crie uma conta, é gratuito e leva apenas alguns minutos.</p>
+        <h2>Login</h2>
+
         {% for field in form %}
 
         <div class="form-group">
@@ -30,18 +30,16 @@
         {% for error in field.errors %}
         <p style="color: red">{{ error }}</p>
         {% endfor %}
+
         </p>
         {% endfor %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+        </div>
 
-        <div class="form-group">
-            <label class="checkbox-inline"><input type="checkbox" required="required"> I accept the <a href="#">Terms of
-                Use</a> &amp; <a href="#">Privacy Policy</a></label>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
-        </div>
     </form>
-    <div class="text-center">Já possui uma conta? <a href="{% url 'login' %}">Sign up</a></div>
+    <div class="text-center">Não possui conta? <a href="{% url 'signup' %}">Signup</a></div>
+
 </div>
 </body>
 {% endblock %}

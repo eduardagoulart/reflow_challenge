@@ -8,8 +8,8 @@ class Candidate(models.Model):
     phone_number = models.CharField(max_length=20)
     github = models.URLField()
     portifolio = models.URLField(blank=True)
-    exp = models.TextField(blank=True)
-    resume = models.FileField()
+    experiencia = models.TextField(blank=True)
+    sobre = models.TextField()
 
     def __str__(self):
         return self.name

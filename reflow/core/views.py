@@ -1,4 +1,5 @@
-from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -6,43 +7,66 @@ from reflow.core.models import Candidate
 from reflow.core.forms import CandidateForm, DeleteForm, EditForm
 
 
+def success(request):
+    return render(request, 'success.html')
+
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        print(form)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
             login(request, user)
-            return redirect('home')
+            return redirect('login')
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
 
 
-def home(request):
-    cand = Candidate.objects.all()
-    if request.method == 'POST':
-        print(request.POST)
-        if '_edit' in request.POST:
-            edit(request)
-        elif '_delete' in request.POST:
-            delete(request)
-
-    context = {
-        'candidate': cand,
-        'new_candidate': form(request),
-        # 'edit': edit(request),
-        # 'delete': delete(request),
-    }
-    return render(request, 'index.html', context)
+def user_details(request):
+    return render(request, 'user.html', {'form': add_user(request)})
 
 
-def form(request):
+def add_user(request):
     if request.method == "POST":
         form = CandidateForm(request.POST or None, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            return redirect('success')
+    else:
+        form = CandidateForm()
+    return form
+
+
+@login_required()
+def home(request):
+    cand = Candidate.objects.all()
+    print(f'home {cand}')
+    if request.user.is_authenticated:
+        context = {
+            'candidate': cand,
+            'new_candidate': add(request),
+        }
+        return render(request, 'index.html', context)
+
+    else:
+        form = UserCreationForm()
+        return render(request, 'access_denied.html', {'form': form})
+
+
+def see_everything(request, email):
+    cand = Candidate.objects.filter(email=email).values()
+    return render(request, 'see_all.html', {'candidate': cand})
+
+
+def add(request):
+    if request.method == "POST":
+        form = CandidateForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -53,8 +77,12 @@ def form(request):
     return form
 
 
-def delete(request):
-    if request.method == "POST":
+def delete(request, email):
+    print(email)
+    print(request.method)
+
+    return redirect('home')
+    '''if request.method == "POST":
         form = DeleteForm(request.POST or None)
         if form.is_valid():
             Candidate.objects.filter(email=form['email'].value()).delete()
@@ -62,22 +90,21 @@ def delete(request):
             return HttpResponseRedirect(request.path_info)
     else:
         form = CandidateForm()
-    return form
+    return form'''
 
 
-def edit(request):
+def edit(request, email):
     if request.method == "POST":
-        form = EditForm(request.POST or None, request.FILES)
-        print(form)
-        print(form.is_valid())
-        edit = Candidate.objects.filter(email=form['email'].value())
-        print(Candidate.objects.filter(email=form['email']))
+        form = EditForm(request.POST)
+
         if form.is_valid():
-            print('editando')
-            # post = form.save(commit=False)
-            # post.author = request.user
-            # post.save()
-            return HttpResponseRedirect(request.path_info)
+            Candidate.objects.filter(email=email).update(name=form['name'].value())
+            Candidate.objects.filter(email=email).update(skills=form['skills'].value())
+            Candidate.objects.filter(email=email).update(phone_number=form['phone_number'].value())
+            Candidate.objects.filter(email=email).update(github=form['github'].value())
+            Candidate.objects.filter(email=email).update(portifolio=form['portifolio'].value())
+            Candidate.objects.filter(email=email).update(experiencia=form['experiencia'].value())
+            return redirect('home')
     else:
-        form = CandidateForm()
-    return form
+        form = EditForm()
+    return render(request, 'edit.html', {'form': form})

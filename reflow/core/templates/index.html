@@ -28,18 +28,14 @@
                 <div class="col-sm-6">
                     <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
                         <span>Add New Employee</span></a>
+                    <a href="{% url 'signup' %}" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i>
+                        <span>Logout</span></a>
                 </div>
             </div>
         </div>
         <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th>
-                    <span class="custom-checkbox">
-                        <input type="checkbox" id="selectAll">
-						<label for="selectAll"></label>
-                    </span>
-                </th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Skills</th>
@@ -52,27 +48,14 @@
 
             {% for i in candidate %}
             <tr>
-                <td>
-					<span class="custom-checkbox">
-						<input type="checkbox" id="checkbox1" name="options[]" value="1">
-						<label for="checkbox1"></label>
-					</span>
-                </td>
+
                 <td>{{ i.name }}</td>
                 <td>{{ i.email }}</td>
                 <td>{{ i.skills }}</td>
                 <td>{{ i.phone_number }}</td>
                 <td>
-                    <a href="#viewEmployee" class="view" title="View" data-toggle="tooltip"><i
+                    <a href="{% url 'see_all' i.email %}" class="view" title="View" data-toggle="tooltip"><i
                             class="material-icons">&#xE417;</i></a>
-
-                    <a href="#editEmployeeModal" class="edit" data-toggle="modal" name="_edit"><i class="material-icons"
-                                                                                                  data-toggle="tooltip"
-                                                                                                  title="Edit">&#xE254;</i></a>
-                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" name="_delete"><i
-                            class="material-icons"
-                            data-toggle="tooltip"
-                            title="Delete">&#xE872;</i></a>
                 </td>
             </tr>
             {% endfor %}
@@ -93,11 +76,11 @@
         </div>
     </div>
 </div>
-<!-- Edit Modal HTML -->
+<!-- Add Modal HTML -->
 <div id="addEmployeeModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="post" enctype="multipart/form-data">
+            <form method="post">
                 {% csrf_token %}
                 <div class="modal-header">
                     <h4 class="modal-title">Add Employee</h4>
@@ -107,8 +90,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" name="{{ new_candidate }}" value="{{ new_candidate.name }}">
-
+                        {{ new_candidate.name }}
                     </div>
                     <div class="form-group">
                         <label>Email</label>
@@ -132,7 +114,7 @@
                     </div>
                     <div class="form-group">
                         <label>Experiência</label>
-                        {{ new_candidate.experiencia }}
+                        {{ new_candidate.exp }}
                     </div>
                     <div class="form-group">
                         <label>Currículo</label>

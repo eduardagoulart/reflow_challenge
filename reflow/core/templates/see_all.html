@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+    <title>Veja todos os dados</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+</head>
+<body>
+<div class="signup-form">
+
+    <form method="post">
+        {% csrf_token %}
+        {% for field in candidate %}
+        <h2>{{field.name}}</h2>
+        <p class="hint-text">Perfil completo de {{ field.name }}.</p>
+
+        <div class="form-group">
+            <p>Nome: {{ field.name }}</p>
+        </div>
+        <div class="form-group">
+            <p>Email: {{ field.email }}</p>
+        </div>
+        <div class="form-group">
+            <p>Telefone: {{ field.phone_number }}</p>
+        </div>
+        <div class="form-group">
+            <p>Github: {{ field.github }}</p>
+        </div>
+        <div class="form-group">
+            <p>Portifolio: {{ field.portifolio }}</p>
+        </div>
+        <div class="form-group">
+            <p>Experiência: {{ field.exp }}</p>
+        </div>
+        <div class="form-group">
+            <p>Sobre: {{ field.about }}</p>
+        </div>
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        <div class="form-group">
+        <a href="{% url 'edit' email=field.email %}" class="edit" data-toggle="modal" name="_edit"><i class="material-icons"
+                                                                             data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+        <a href="{% url 'delete' email=field.email %}" class="delete" id="delete" name="_delete" data-toggle="modal"><i class="material-icons"
+                                                                             data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+    </div>
+        </p>
+        {% endfor %}
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-lg btn-block">Voltar</button>
+        </div>
+    </form>
+
+</div>
+</body>
+{% endblock %}

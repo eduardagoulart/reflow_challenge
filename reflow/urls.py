@@ -16,9 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import reflow.core.views
+from django.contrib.auth.views import LoginView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', reflow.core.views.signup, name='signup'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), {'next_page': '/'}, name='logout'),
+    path('user_details/', reflow.core.views.user_details, name='user_details'),
+    path('index/see_all/<str:email>/', reflow.core.views.see_everything, name='see_all'),
+    path('index/see_all/<str:email>/edit/', reflow.core.views.edit, name='edit'),
+    path('index/see_all/<str:email>/delete/', reflow.core.views.delete, name='delete'),
+    path('success/', reflow.core.views.success, name='success'),
     path('index/', reflow.core.views.home, name='home'),
 ]
+# user_id>/
