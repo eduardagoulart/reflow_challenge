@@ -46,7 +46,6 @@ def add_user(request):
 @login_required()
 def home(request):
     cand = Candidate.objects.all()
-    print(f'home {cand}')
     if request.user.is_authenticated:
         context = {
             'candidate': cand,
@@ -78,19 +77,8 @@ def add(request):
 
 
 def delete(request, email):
-    print(email)
-    print(request.method)
-
+    Candidate.objects.filter(email=email).delete()
     return redirect('home')
-    '''if request.method == "POST":
-        form = DeleteForm(request.POST or None)
-        if form.is_valid():
-            Candidate.objects.filter(email=form['email'].value()).delete()
-            print('deletando elemento')
-            return HttpResponseRedirect(request.path_info)
-    else:
-        form = CandidateForm()
-    return form'''
 
 
 def edit(request, email):

@@ -20,7 +20,6 @@ class CandidateForm(forms.ModelForm):
 
 class EditForm(forms.Form):
     name = forms.CharField(max_length=200)
-    # email = forms.EmailField()
     skills = forms.CharField(max_length=200)
     phone_number = forms.CharField(max_length=20)
     github = forms.URLField()
@@ -30,7 +29,6 @@ class EditForm(forms.Form):
 
     widgets = {
         'name': forms.TextInput(attrs={"class": "form-control"}),
-        # 'email': forms.EmailInput(attrs={"class": "form-control"}),
         'skills': forms.TextInput(attrs={"class": "form-control"}),
         'phone_number': forms.TextInput(attrs={"class": "form-control"}),
         'github': forms.URLInput(attrs={"class": "form-control"}),
